@@ -193,25 +193,6 @@
     max-width: 580px;
   }
 
-  /* ── Stats row ── */
-  .stats {
-    display: flex; gap: 34px;
-    margin-top: 24px; flex-wrap: wrap;
-  }
-  .stat { display: flex; flex-direction: column; }
-  .stat-num {
-    font-family: var(--serif);
-    font-size: 28px; font-weight: 700;
-    color: var(--accent);
-    line-height: 1;
-    letter-spacing: -0.01em;
-  }
-  .stat-label {
-    font-size: 12.5px; color: var(--muted);
-    text-transform: uppercase; letter-spacing: 0.06em;
-    margin-top: 5px;
-  }
-
   .badges {
     display: flex; gap: 10px;
     margin-top: 22px;
@@ -503,7 +484,6 @@
     .photo { width: 160px; height: 160px; }
     .hero-text p { max-width: 100%; }
     .badges { justify-content: center; }
-    .stats { justify-content: center; }
     .hero-text h1 { font-size: 32px; }
     .details { grid-template-columns: 1fr; padding: 24px; }
     .nav { flex-wrap: nowrap; height: 56px; overflow-x: auto; gap: 4px; }
@@ -545,21 +525,6 @@
         <h1>Luigi Longo</h1>
         <p class="tagline">Economist · European Commission — Joint Research Centre</p>
         <p>I am an applied econometrician specialized in macroeconometrics and time series analysis. I hold a PhD in Economics from <a href="https://axes.imtlucca.it/" target="_blank" rel="noopener">IMT Lucca</a> and I currently work for the Joint Research Centre at the European Commission in the <a href="https://joint-research-centre.ec.europa.eu/projects-and-activities/macroeconomic-monitoring-fiscal-surveillance-forecasting-and-nowcasting_en" target="_blank" rel="noopener">Nowcasting Team</a>. I previously worked at the <a href="https://www.bankofengland.co.uk/" target="_blank" rel="noopener">Bank of England</a> and <a href="https://www.bu.edu/" target="_blank" rel="noopener">Boston University</a>.</p>
-
-        <div class="stats">
-          <div class="stat">
-            <span class="stat-num" data-count="5">0</span>
-            <span class="stat-label">Publications</span>
-          </div>
-          <div class="stat">
-            <span class="stat-num" data-count="1">0</span>
-            <span class="stat-label">Working Papers</span>
-          </div>
-          <div class="stat">
-            <span class="stat-num" data-count="2">0</span>
-            <span class="stat-label">In Progress</span>
-          </div>
-        </div>
 
         <div class="badges" aria-label="Social links">
           <a class="badge" href="https://www.linkedin.com/in/luigi-longo-b781b2149/" aria-label="LinkedIn" target="_blank" rel="noopener">
@@ -676,7 +641,6 @@
         </div>
 
         <div class="subhead">Publications (secondary)</div>
-        <p class="subhead-note">Contributions where my role was more focused or technical.</p>
 
         <div class="pub-card reveal">
           <button class="pub-toggle" aria-label="Toggle abstract"><svg viewBox="0 0 16 16"><path d="M7 1h2v6h6v2H9v6H7V9H1V7h6z"/></svg></button>
@@ -730,6 +694,12 @@
           <span class="wip-tag">In progress</span>
           <div class="pub-title">Shapley-Based Local Projections</div>
           <div class="pub-authors">Estimation of nonlinear local projections.</div>
+        </div>
+
+        <div class="simple-card reveal">
+          <span class="wip-tag">In progress</span>
+          <div class="pub-title">LLM-Price-Shock Extraction and the Propagation to Macroeconomic Expectations</div>
+          <div class="pub-authors">joint with K. Boss, L. Onorante</div>
         </div>
 
       </div>
@@ -799,25 +769,6 @@
     });
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
-
-  // ── Animated count-up stats ──
-  const countObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (!e.isIntersecting) return;
-      const el = e.target;
-      const target = +el.dataset.count;
-      let cur = 0;
-      const step = Math.max(1, Math.round(target / 20));
-      const tick = () => {
-        cur = Math.min(target, cur + step);
-        el.textContent = cur;
-        if (cur < target) requestAnimationFrame(tick);
-      };
-      tick();
-      countObs.unobserve(el);
-    });
-  }, { threshold: 0.5 });
-  document.querySelectorAll('.stat-num').forEach(el => countObs.observe(el));
 
   // ── Expandable abstracts ──
   document.querySelectorAll('.pub-toggle').forEach(t => {
