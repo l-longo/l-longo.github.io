@@ -312,7 +312,6 @@
     line-height: 1.45;
     margin: 0 0 6px;
     color: var(--text);
-    padding-right: 30px;
   }
   .pub-card .pub-authors {
     font-size: 14px;
@@ -351,38 +350,60 @@
   .pub-link svg { width: 13px; height: 13px; fill: currentColor; }
 
   /* ── Expandable abstract ── */
-  .pub-toggle {
-    position: absolute; top: 20px; right: 22px;
-    width: 24px; height: 24px;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    background: var(--bg);
+  .pub-head {
     cursor: pointer;
+    padding-right: 34px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .pub-head:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 6px;
+    border-radius: 4px;
+  }
+  .pub-head .pub-title { transition: color var(--transition); }
+  .pub-head:hover .pub-title { color: var(--accent); }
+
+  .pub-chevron {
+    position: absolute; top: 24px; right: 24px;
+    width: 20px; height: 20px;
     display: flex; align-items: center; justify-content: center;
-    transition: all var(--transition);
-    padding: 0;
     color: var(--muted);
+    transition: transform var(--transition), color var(--transition);
+    pointer-events: none;
   }
-  .pub-toggle:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
-  .pub-toggle svg { width: 13px; height: 13px; fill: currentColor; transition: transform var(--transition); }
-  .pub-card.open .pub-toggle svg { transform: rotate(45deg); }
+  .pub-chevron svg { width: 12px; height: 12px; fill: currentColor; }
+  .pub-head:hover .pub-chevron { color: var(--accent); }
+  .pub-card.open .pub-chevron { transform: rotate(180deg); color: var(--accent); }
+
   .pub-abstract {
-    max-height: 0;
-    overflow: hidden;
+    display: grid;
+    grid-template-rows: 0fr;
     opacity: 0;
-    transition: max-height var(--transition), opacity var(--transition), margin var(--transition);
-    font-size: 14px;
-    line-height: 1.65;
-    color: var(--muted);
-    border-left: 2px solid var(--accent);
-    padding-left: 0;
     margin: 0;
+    transition: grid-template-rows var(--transition), opacity var(--transition), margin var(--transition);
   }
+  .pub-abstract > div { overflow: hidden; }
   .pub-card.open .pub-abstract {
-    max-height: 200px;
+    grid-template-rows: 1fr;
     opacity: 1;
-    padding-left: 14px;
-    margin: 4px 0 14px;
+    margin: 14px 0 16px;
+  }
+  .pub-abstract-body {
+    border-left: 2px solid var(--accent);
+    padding-left: 16px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--muted);
+    text-align: justify;
+    hyphens: auto;
+  }
+  .pub-abstract-label {
+    display: block;
+    font-size: 10.5px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.09em;
+    color: var(--accent);
+    margin-bottom: 6px;
+    text-align: left;
   }
 
   /* ── Simple list items (secondary / WIP) ── */
@@ -492,6 +513,9 @@
     .nav-links a { padding: 5px 10px; font-size: 13px; white-space: nowrap; }
     section h2 { font-size: 26px; }
     .pub-card { padding: 18px 20px; }
+    .pub-head { padding-right: 26px; }
+    .pub-chevron { top: 20px; right: 18px; }
+    .pub-abstract-body { text-align: left; padding-left: 13px; font-size: 13.5px; }
     .contact-grid { flex-direction: column; }
   }
 </style>
@@ -567,19 +591,31 @@
       <div class="pub-list">
 
         <div class="pub-card reveal">
-          <button class="pub-toggle" aria-label="Toggle abstract"><svg viewBox="0 0 16 16"><path d="M7 1h2v6h6v2H9v6H7V9H1V7h6z"/></svg></button>
-          <div class="pub-title">Reddit's Pulse on US Inflation: Forecasting with Large Language Models</div>
-          <div class="pub-authors">Del Monaco A., Longo L., Marcucci J., Tafani I. (2026)</div>
-          <div class="pub-venue">Journal of Applied Econometrics <span class="status">(conditionally accepted)</span></div>
-          <div class="pub-abstract">We extract inflation signals from Reddit discussions with large language models to forecast US inflation.</div>
+          <div class="pub-head" role="button" tabindex="0" aria-expanded="false">
+            <div class="pub-title">Reddit's Pulse on US Inflation: Forecasting with Large Language Models</div>
+            <div class="pub-authors">Del Monaco A., Longo L., Marcucci J., Tafani I. (2026)</div>
+            <div class="pub-venue">Journal of Applied Econometrics <span class="status">(conditionally accepted)</span></div>
+            <span class="pub-chevron" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M8 11.5 2.5 6l1.4-1.4L8 8.7l4.1-4.1L13.5 6z"/></svg></span>
+          </div>
+          <div class="pub-abstract">
+            <div>
+              <div class="pub-abstract-body"><span class="pub-abstract-label">Abstract</span>We show that large language models (LLMs) can transform Reddit discussions into timely predictors of U.S. inflation. Using inflation-related submissions and time-local comments from major economics-focused subreddits, we construct monthly narrative indicators that capture perceived price dynamics. Signals are generated by fine-tuning pre-trained models (BERT-, Qwen-, LLaMA-, and Gemma-type architectures) on labels produced by human annotators and ChatGPT, and benchmarked against an unfine-tuned LLaMA-70B model. Forecasting and nowcasting are implemented in pseudo-real time with strictly backward-looking transformations, recursive expanding windows, and explicit data-availability constraints. In a recursive pseudo out-of-sample evaluation with horizons up to 18 months, Reddit&ndash;LLM models and MSE-weighted forecast combinations improve point and density forecasts of headline CPI and core PCE relative to standard benchmarks, including autoregressive models augmented with Michigan survey expectations and inflation swaps. In real-time nowcasting, Reddit signals constructed using information available early in the month improve nowcasts and perform competitively with the Cleveland Fed Inflation Nowcast. Importantly, much of the predictive content can be captured with fine-tuned small language models (SLMs), which often deliver performance close to much larger LLMs at a fraction of the computational cost, supporting scalable and resource-efficient deployment.</div>
+            </div>
+          </div>
         </div>
 
         <div class="pub-card reveal">
-          <button class="pub-toggle" aria-label="Toggle abstract"><svg viewBox="0 0 16 16"><path d="M7 1h2v6h6v2H9v6H7V9H1V7h6z"/></svg></button>
-          <div class="pub-title">SVAR Identification with Nowcasted Macroeconomic Data</div>
-          <div class="pub-authors">Corsi F., Longo L., Cordoni F. (2025)</div>
-          <div class="pub-venue">Journal of Economic Dynamics and Control</div>
-          <div class="pub-abstract">We propose a structural VAR identification strategy that exploits the high-frequency properties of nowcasted macroeconomic data.</div>
+          <div class="pub-head" role="button" tabindex="0" aria-expanded="false">
+            <div class="pub-title">SVAR Identification with Nowcasted Macroeconomic Data</div>
+            <div class="pub-authors">Corsi F., Longo L., Cordoni F. (2025)</div>
+            <div class="pub-venue">Journal of Economic Dynamics and Control</div>
+            <span class="pub-chevron" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M8 11.5 2.5 6l1.4-1.4L8 8.7l4.1-4.1L13.5 6z"/></svg></span>
+          </div>
+          <div class="pub-abstract">
+            <div>
+              <div class="pub-abstract-body"><span class="pub-abstract-label">Abstract</span>Temporal aggregation of macroeconomic series induces spurious contemporaneous correlation among reduced-form residuals, which lies at the root of the identification problem in structural VAR models. We show that raising the sampling frequency attenuates these contemporaneous links: at sufficiently high frequency the residual covariance matrix becomes approximately diagonal, so the structural shocks can be recovered through standard short-run restrictions with little or no reliance on the ordering of the variables. We provide a formal argument, Monte Carlo evidence, and an empirical application in which nowcasted high-frequency series for inflation, output and the policy rate replace official low-frequency releases, delivering order-invariant identification.</div>
+            </div>
+          </div>
           <div class="pub-links">
             <a class="pub-link" href="https://www.sciencedirect.com/science/article/pii/S0165188925001423#bl0010" target="_blank" rel="noopener">
               <svg viewBox="0 0 16 16"><path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9.5a2 2 0 0 1-1.88 1.33H4.5A2 2 0 0 1 4.5 6.5h1.854zM9.646 10.5H12a3 3 0 0 0 0-6H9a3 3 0 0 0-2.83 4H6.5a2 2 0 0 1 1.88-1.33h3.12A2 2 0 0 1 11.5 9.5H9.646z"/></svg>
@@ -597,11 +633,17 @@
         </div>
 
         <div class="pub-card reveal">
-          <button class="pub-toggle" aria-label="Toggle abstract"><svg viewBox="0 0 16 16"><path d="M7 1h2v6h6v2H9v6H7V9H1V7h6z"/></svg></button>
-          <div class="pub-title">A Social Media Alert System for Meme Stocks</div>
-          <div class="pub-authors">Gianstefani I., Longo L., Riccaboni M. (2024)</div>
-          <div class="pub-venue">Quantitative Finance</div>
-          <div class="pub-abstract">We build a network-based alert system that detects anomalous social-media activity around meme stocks in real time.</div>
+          <div class="pub-head" role="button" tabindex="0" aria-expanded="false">
+            <div class="pub-title">A Social Media Alert System for Meme Stocks</div>
+            <div class="pub-authors">Gianstefani I., Longo L., Riccaboni M. (2024)</div>
+            <div class="pub-venue">Quantitative Finance</div>
+            <span class="pub-chevron" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M8 11.5 2.5 6l1.4-1.4L8 8.7l4.1-4.1L13.5 6z"/></svg></span>
+          </div>
+          <div class="pub-abstract">
+            <div>
+              <div class="pub-abstract-body"><span class="pub-abstract-label">Abstract</span>The GameStop short squeeze showed how retail investors aggregating on social media can move financial markets. We introduce an early warning system that flags potentially suspicious user activity on social networks capable of affecting market stability, applying it to Reddit data with meme stocks and non-meme stocks as case studies. The system operates in two stages: the first detects unusual levels of activity on the network, while the second assesses whether that movement is intended to coordinate users into collective action. An event study shows that the alert triggers for meme stocks shortly before abnormal returns and elevated volatility, and a regression analysis documents how differently social networks affect price dynamics for meme and non-meme stocks.</div>
+            </div>
+          </div>
           <div class="pub-links">
             <a class="pub-link" href="https://www.tandfonline.com/doi/full/10.1080/14697688.2025.2464179" target="_blank" rel="noopener">
               <svg viewBox="0 0 16 16"><path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9.5a2 2 0 0 1-1.88 1.33H4.5A2 2 0 0 1 4.5 6.5h1.854zM9.646 10.5H12a3 3 0 0 0 0-6H9a3 3 0 0 0-2.83 4H6.5a2 2 0 0 1 1.88-1.33h3.12A2 2 0 0 1 11.5 9.5H9.646z"/></svg>
@@ -623,11 +665,17 @@
         </div>
 
         <div class="pub-card reveal">
-          <button class="pub-toggle" aria-label="Toggle abstract"><svg viewBox="0 0 16 16"><path d="M7 1h2v6h6v2H9v6H7V9H1V7h6z"/></svg></button>
-          <div class="pub-title">A Neural Network Ensemble Approach for GDP Forecasting</div>
-          <div class="pub-authors">Longo L., Riccaboni M., Rungi A. (2022)</div>
-          <div class="pub-venue">Journal of Economic Dynamics and Control</div>
-          <div class="pub-abstract">We combine an ensemble of neural networks with high-frequency data to improve GDP forecasts.</div>
+          <div class="pub-head" role="button" tabindex="0" aria-expanded="false">
+            <div class="pub-title">A Neural Network Ensemble Approach for GDP Forecasting</div>
+            <div class="pub-authors">Longo L., Riccaboni M., Rungi A. (2022)</div>
+            <div class="pub-venue">Journal of Economic Dynamics and Control</div>
+            <span class="pub-chevron" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M8 11.5 2.5 6l1.4-1.4L8 8.7l4.1-4.1L13.5 6z"/></svg></span>
+          </div>
+          <div class="pub-abstract">
+            <div>
+              <div class="pub-abstract-body"><span class="pub-abstract-label">Abstract</span>We propose an ensemble learning methodology to forecast future releases of US GDP growth. The approach combines a recurrent neural network with a dynamic factor model whose mean varies over time according to a generalized autoregressive score (DFM-GAS), drawing on a broad set of predictors observed at mixed frequencies. Evaluating each component of the ensemble separately allows us to isolate how shifts in the mean, typically caused by recessions, affect predictive ability. The combination markedly reduces the one-quarter-ahead forecast error in the aftermath of the 2008&ndash;09 global financial crisis and outperforms benchmarks including the random walk, VAR models, random forests and boosting.</div>
+            </div>
+          </div>
           <div class="pub-links">
             <a class="pub-link" href="https://www.sciencedirect.com/science/article/pii/S016518892100213X" target="_blank" rel="noopener">
               <svg viewBox="0 0 16 16"><path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9.5a2 2 0 0 1-1.88 1.33H4.5A2 2 0 0 1 4.5 6.5h1.854zM9.646 10.5H12a3 3 0 0 0 0-6H9a3 3 0 0 0-2.83 4H6.5a2 2 0 0 1 1.88-1.33h3.12A2 2 0 0 1 11.5 9.5H9.646z"/></svg>
@@ -643,11 +691,17 @@
         <div class="subhead">Publications (secondary)</div>
 
         <div class="pub-card reveal">
-          <button class="pub-toggle" aria-label="Toggle abstract"><svg viewBox="0 0 16 16"><path d="M7 1h2v6h6v2H9v6H7V9H1V7h6z"/></svg></button>
-          <div class="pub-title">Unveiling the Entrepreneurial Ecosystems Black Box: An Interpretable Machine Learning Approach</div>
-          <div class="pub-authors">Longo L., Mazzoni L., Riccaboni M.</div>
-          <div class="pub-venue">Journal of the International Council for Small Business</div>
-          <div class="pub-abstract">My role focused on the estimation of Shapley values from an artificial neural network predictive model.</div>
+          <div class="pub-head" role="button" tabindex="0" aria-expanded="false">
+            <div class="pub-title">Unveiling the Entrepreneurial Ecosystems Black Box: An Interpretable Machine Learning Approach</div>
+            <div class="pub-authors">Longo L., Mazzoni L., Riccaboni M.</div>
+            <div class="pub-venue">Journal of the International Council for Small Business</div>
+            <span class="pub-chevron" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M8 11.5 2.5 6l1.4-1.4L8 8.7l4.1-4.1L13.5 6z"/></svg></span>
+          </div>
+          <div class="pub-abstract">
+            <div>
+              <div class="pub-abstract-body"><span class="pub-abstract-label">Abstract</span>My role focused on the estimation of Shapley values from an artificial neural network predictive model, used to open up the black box of entrepreneurial ecosystems and quantify the contribution of each ecosystem component to the predicted outcome.</div>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -659,11 +713,17 @@
       <div class="pub-list">
 
         <div class="pub-card reveal">
-          <button class="pub-toggle" aria-label="Toggle abstract"><svg viewBox="0 0 16 16"><path d="M7 1h2v6h6v2H9v6H7V9H1V7h6z"/></svg></button>
-          <div class="pub-title">Nowcasting the Euro Area with Social Media Data</div>
-          <div class="pub-authors">Boss K., Longo L., Onorante L. (2025)</div>
-          <div class="pub-venue">Working Paper</div>
-          <div class="pub-abstract">We nowcast euro-area inflation by combining social-media signals extracted via LLMs with macroeconomic data.</div>
+          <div class="pub-head" role="button" tabindex="0" aria-expanded="false">
+            <div class="pub-title">Nowcasting the Euro Area with Social Media Data</div>
+            <div class="pub-authors">Boss K., Longo L., Onorante L. (2025)</div>
+            <div class="pub-venue">Working Paper</div>
+            <span class="pub-chevron" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M8 11.5 2.5 6l1.4-1.4L8 8.7l4.1-4.1L13.5 6z"/></svg></span>
+          </div>
+          <div class="pub-abstract">
+            <div>
+              <div class="pub-abstract-body"><span class="pub-abstract-label">Abstract</span>Using a state-of-the-art large language model, we extract forward-looking and context-sensitive signals on euro-area inflation and unemployment from millions of Reddit submissions and comments. We build daily indicators that incorporate not only posts but also the social interaction among users. Our empirical results show consistent gains in out-of-sample nowcasting accuracy relative to daily newspaper sentiment and financial variables, with the largest improvements in unusual times such as the (post-)COVID-19 period. Applying AI tools to the analysis of social media therefore yields useful daily-frequency signals about inflation and unemployment in Europe, and constitutes a valuable addition to the toolkit available to economic forecasters and nowcasters.</div>
+            </div>
+          </div>
           <div class="pub-links">
             <a class="pub-link" href="https://arxiv.org/abs/2506.10546" target="_blank" rel="noopener">
               <svg viewBox="0 0 16 16"><path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9.5a2 2 0 0 1-1.88 1.33H4.5A2 2 0 0 1 4.5 6.5h1.854zM9.646 10.5H12a3 3 0 0 0 0-6H9a3 3 0 0 0-2.83 4H6.5a2 2 0 0 1 1.88-1.33h3.12A2 2 0 0 1 11.5 9.5H9.646z"/></svg>
@@ -770,9 +830,22 @@
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-  // ── Expandable abstracts ──
-  document.querySelectorAll('.pub-toggle').forEach(t => {
-    t.addEventListener('click', () => t.closest('.pub-card').classList.toggle('open'));
+  // ── Expandable abstracts: click (or Enter/Space) anywhere on the paper header ──
+  document.querySelectorAll('.pub-head').forEach(head => {
+    const card = head.closest('.pub-card');
+    const toggle = () => {
+      const open = card.classList.toggle('open');
+      head.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+    head.addEventListener('click', toggle);
+    head.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+    });
+  });
+
+  // Links inside a card must not trigger the abstract toggle
+  document.querySelectorAll('.pub-links a').forEach(a => {
+    a.addEventListener('click', e => e.stopPropagation());
   });
 
   // ── Active nav link on scroll ──
