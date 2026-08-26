@@ -277,18 +277,6 @@
     border-radius: 2px;
     margin-bottom: 32px;
   }
-  .subhead {
-    font-family: var(--serif);
-    font-size: 20px; font-weight: 600;
-    margin: 40px 0 4px;
-    letter-spacing: -0.01em;
-    color: var(--text);
-  }
-  .subhead-note {
-    font-size: 13.5px; color: var(--muted);
-    margin: 0 0 20px;
-  }
-
   /* ── Publication cards ── */
   .pub-list { display: flex; flex-direction: column; gap: 16px; }
   .pub-card {
@@ -613,7 +601,7 @@
           </div>
           <div class="pub-abstract">
             <div>
-              <div class="pub-abstract-body"><span class="pub-abstract-label">Abstract</span>Temporal aggregation of macroeconomic series induces spurious contemporaneous correlation among reduced-form residuals, which lies at the root of the identification problem in structural VAR models. We show that raising the sampling frequency attenuates these contemporaneous links: at sufficiently high frequency the residual covariance matrix becomes approximately diagonal, so the structural shocks can be recovered through standard short-run restrictions with little or no reliance on the ordering of the variables. We provide a formal argument, Monte Carlo evidence, and an empirical application in which nowcasted high-frequency series for inflation, output and the policy rate replace official low-frequency releases, delivering order-invariant identification.</div>
+              <div class="pub-abstract-body"><span class="pub-abstract-label">Abstract</span>Starting from the theoretical observation that the identification problem of SVAR models arises from contemporaneous dependence among macroeconomic variables, we show, both theoretically and empirically, that such dependence tends to vanish as the observation frequency increases. By adopting nowcasted high-frequency data, we exploit this feature to identify structural shocks using standard short-run restrictions, thereby reducing or even eliminating the reliance on variable ordering. Our empirical analysis is divided into two parts: an illustrative application comparing identification strategies across different frequencies, and a structural section featuring (i) a Proxy(HF-)SVAR to recover exogenous monetary policy shocks, and (ii) an uncertainty shock analysis using high-frequency data to replicate the well-known dynamics found in the literature. The results align with recent findings and highlight the feasibility and usefulness of preserving high-frequency information in all variables.</div>
             </div>
           </div>
           <div class="pub-links">
@@ -641,7 +629,7 @@
           </div>
           <div class="pub-abstract">
             <div>
-              <div class="pub-abstract-body"><span class="pub-abstract-label">Abstract</span>The GameStop short squeeze showed how retail investors aggregating on social media can move financial markets. We introduce an early warning system that flags potentially suspicious user activity on social networks capable of affecting market stability, applying it to Reddit data with meme stocks and non-meme stocks as case studies. The system operates in two stages: the first detects unusual levels of activity on the network, while the second assesses whether that movement is intended to coordinate users into collective action. An event study shows that the alert triggers for meme stocks shortly before abnormal returns and elevated volatility, and a regression analysis documents how differently social networks affect price dynamics for meme and non-meme stocks.</div>
+              <div class="pub-abstract-body"><span class="pub-abstract-label">Abstract</span>The Gamestop (GME) short squeeze showed the world how investors aggregating on social media can have a powerful impact on financial markets. In this paper, an early warning system is introduced to detect potentially suspicious activity by users on social networks that could affect the stability of financial markets. We apply our approach to Reddit data and select both memes and non-meme stocks as case studies. The alert system is divided into two stages: the first is based on unusual activity on the social network, while the second aims to detect whether the movement is intended to coordinate users into a collective action. After conducting an event study analysis, we find that the alert system kicks in for meme stocks just before abnormal returns and higher volatility.</div>
             </div>
           </div>
           <div class="pub-links">
@@ -673,7 +661,7 @@
           </div>
           <div class="pub-abstract">
             <div>
-              <div class="pub-abstract-body"><span class="pub-abstract-label">Abstract</span>We propose an ensemble learning methodology to forecast future releases of US GDP growth. The approach combines a recurrent neural network with a dynamic factor model whose mean varies over time according to a generalized autoregressive score (DFM-GAS), drawing on a broad set of predictors observed at mixed frequencies. Evaluating each component of the ensemble separately allows us to isolate how shifts in the mean, typically caused by recessions, affect predictive ability. The combination markedly reduces the one-quarter-ahead forecast error in the aftermath of the 2008&ndash;09 global financial crisis and outperforms benchmarks including the random walk, VAR models, random forests and boosting.</div>
+              <div class="pub-abstract-body"><span class="pub-abstract-label">Abstract</span>We propose an ensemble learning methodology to forecast the future US GDP growth release. Our approach combines a Recurrent Neural Network (RNN) and a Dynamic Factor model accounting for time-variation in the mean with a Generalized Autoregressive Score (DFM-GAS). We show how our approach improves forecasts in the aftermath of the 2008-09 global financial crisis by reducing the forecast error for the one-quarter horizon. An exercise on the COVID-19 recession shows a good performance during the economic rebound. Eventually, we provide an interpretable machine learning routine based on integrated gradients to evaluate how the features of the model reflect the evolution of the business cycle.</div>
             </div>
           </div>
           <div class="pub-links">
@@ -687,23 +675,6 @@
             </a>
           </div>
         </div>
-
-        <div class="subhead">Publications (secondary)</div>
-
-        <div class="pub-card reveal">
-          <div class="pub-head" role="button" tabindex="0" aria-expanded="false">
-            <div class="pub-title">Unveiling the Entrepreneurial Ecosystems Black Box: An Interpretable Machine Learning Approach</div>
-            <div class="pub-authors">Longo L., Mazzoni L., Riccaboni M.</div>
-            <div class="pub-venue">Journal of the International Council for Small Business</div>
-            <span class="pub-chevron" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M8 11.5 2.5 6l1.4-1.4L8 8.7l4.1-4.1L13.5 6z"/></svg></span>
-          </div>
-          <div class="pub-abstract">
-            <div>
-              <div class="pub-abstract-body"><span class="pub-abstract-label">Abstract</span>My role focused on the estimation of Shapley values from an artificial neural network predictive model, used to open up the black box of entrepreneurial ecosystems and quantify the contribution of each ecosystem component to the predicted outcome.</div>
-            </div>
-          </div>
-        </div>
-
       </div>
     </section>
 
@@ -760,6 +731,34 @@
           <span class="wip-tag">In progress</span>
           <div class="pub-title">LLM-Price-Shock Extraction and the Propagation to Macroeconomic Expectations</div>
           <div class="pub-authors">joint with K. Boss, L. Onorante</div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="publications-secondary">
+      <h2>Publications (secondary)</h2>
+      <div class="section-rule"></div>
+      <div class="pub-list">
+
+        <div class="pub-card reveal">
+          <div class="pub-head" role="button" tabindex="0" aria-expanded="false">
+            <div class="pub-title">Unveiling the Entrepreneurial Ecosystems Black Box: An Interpretable Machine Learning Approach</div>
+            <div class="pub-authors">Longo L., Mazzoni L., Riccaboni M. (2026)</div>
+            <div class="pub-venue">Journal of the International Council for Small Business</div>
+            <span class="pub-chevron" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M8 11.5 2.5 6l1.4-1.4L8 8.7l4.1-4.1L13.5 6z"/></svg></span>
+          </div>
+          <div class="pub-abstract">
+            <div>
+              <div class="pub-abstract-body"><span class="pub-abstract-label">Abstract</span>Multidimensionality, interdependence, and non-linearity characteristics of complex systems make the measurement of Entrepreneurial Ecosystems a very challenging task. A known limitation of the Entrepreneurial Ecosystem frameworks is the difficulty of quantifying the impact of distinct elements. In this study, we propose a novel methodology based on recent advancements in Explainable Artificial Intelligence to fill this gap, analyzing the specific case of entrepreneurial talent transfer between regions. We find that Artificial Neural Networks, interpreted via Shapley values, achieve higher accuracy than traditional econometric techniques, accounting for the non-linearities of the data-generating process, and provide direct interpretation of each element. To validate and showcase our approach, we combine simulated results with the analysis of the case study of Lombardy, one of the most dynamic Italian Entrepreneurial Ecosystems. Our results offer an actionable framework for policymakers and practitioners, supporting the monitoring process of individual Entrepreneurial Ecosystem elements beyond composite indices.</div>
+            </div>
+          </div>
+          <div class="pub-links">
+            <a class="pub-link" href="https://www.tandfonline.com/doi/full/10.1080/26437015.2026.2712250" target="_blank" rel="noopener">
+              <svg viewBox="0 0 16 16"><path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9.5a2 2 0 0 1-1.88 1.33H4.5A2 2 0 0 1 4.5 6.5h1.854zM9.646 10.5H12a3 3 0 0 0 0-6H9a3 3 0 0 0-2.83 4H6.5a2 2 0 0 1 1.88-1.33h3.12A2 2 0 0 1 11.5 9.5H9.646z"/></svg>
+              Paper
+            </a>
+          </div>
         </div>
 
       </div>
